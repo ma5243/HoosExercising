@@ -1,0 +1,5 @@
+Django
+gunicorn
+django-allauth
+django-bootstrap4
+bootstrap4
