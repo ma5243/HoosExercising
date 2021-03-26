@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,12 +81,28 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# When running locally, we connect to the postgres database hosted on Heroku.
+# Credentials are held in our .env, so we need to call load_dotenv() to populate os.environ.
+#
+# However, Travis CI doesn't need access to production database, so we can instead use the local postgres
+# database by checking if TRAVIS environment var is set.
+if 'TRAVIS' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'travis_ci_test',
+            'USER': 'postgres',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': ''
+        }
     }
-}
+else:
+    from dotenv import load_dotenv
+    load_dotenv()
+    import dj_database_url
+    DATABASES = {}
+    DATABASES['default'] = dj_database_url.config(conn_max_age=1200, ssl_require=True)
 
 
 # Password validation

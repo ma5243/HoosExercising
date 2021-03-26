@@ -3,6 +3,8 @@ python:
     - '3.8'
 install:
     - pip install -r requirements-travis.txt
+before_script:
+    - psql -c 'create database travis_ci_test;' -U postgres
 script:
     - python3 manage.py test
 deploy:
@@ -12,3 +14,5 @@ deploy:
     app: cs3240-a-18
     on:
         repo: uva-cs3240-s21/project-a-18
+services:
+    - postgresql

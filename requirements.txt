@@ -4,3 +4,6 @@ django-heroku
 django-allauth
 django-bootstrap4
 bootstrap4
+dj-database-url
+python-dotenv
+psycopg2
