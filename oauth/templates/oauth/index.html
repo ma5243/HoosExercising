@@ -3,12 +3,10 @@
 {% load static %}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
-<html>
 
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
-  
+{% block title %}Hoos Exercising{% endblock %}
 
+{% block content %}
 <style>
   .container {
     margin-left: auto;
@@ -16,7 +14,7 @@
   }
   .google-btn {
     font-family: 'Roboto', sans-serif;
-    background-color: white;  
+    background-color: white;
     color:  rgb(117, 117, 117);
     border-color: rgb(222, 226, 230);;
   }
@@ -48,4 +46,4 @@
   </div>
 </body>
 
-</html>
+{% endblock %}
