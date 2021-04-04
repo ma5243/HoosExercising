@@ -33,6 +33,7 @@ def create_profile(sender, created, instance, **kwargs):
         new_profile = Profile(user = instance, bio="Placeholder bio", signup_date=timezone.now())
         new_profile.save()
 
+### NOT CURRENTLY BEING USED (REFER INSTEAD TO dashboard/models.py) - DO NOT DELETE, CONTAINS USEFUL CODE ###
 class Exercise(models.Model):
     # Create an Exercise model that can store the basic information about exercises that a user would complete
     # Each Profile would then have an associated list of exercise objects, each instance referring to the date the exercise was recorded
