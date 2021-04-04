@@ -6,6 +6,7 @@ install:
 before_script:
     - psql -c 'create database travis_ci_test;' -U postgres
 script:
+    - python3 manage.py migrate
     - python3 manage.py test
 deploy:
     provider: heroku
