@@ -3,13 +3,14 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.urls import reverse
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
 class Profile(models.Model):
     # Wrap the User object within a Profile, gives name and email.
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE) 
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE,primary_key=True)
     signup_date = models.DateField(verbose_name="User signup date")
 
     bio = models.CharField(verbose_name="User Bio", max_length=200, null=True)
@@ -21,6 +22,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name + ": " + str(self.points) + " accumulated points"
+
 
 # Allauth fires a post_save signal when a new user signs up.
 # We can catch this signal and create a sensible default profile and initialize the one-to-one relationship.

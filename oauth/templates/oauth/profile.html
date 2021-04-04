@@ -1,0 +1,43 @@
+{% extends 'oauth/base.html' %}
+
+{% load socialaccount %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+
+{% block title %}Profile for {{user.first_name}} {% endblock %}
+
+{% block content %}
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      Photo of the Person
+    </div>
+    <div class="col-sm">
+        <div class="row">
+            <p> {{ user.first_name }} {{ user.last_name }}</p>
+        </div>
+        <div class="row">
+           Height: {{ user.profile.height }}
+        </div>
+        <div class="row">
+           Weight: {{ user.profile.weight }}
+        </div>
+        <div class="row">
+           Points: {{ user.profile.points }}
+        </div>
+    </div>
+  </div>
+
+    <div class="row">
+        <div class="col-sm">
+            Bio: {{ user.profile.bio }}
+        </div>
+        <div class="row">
+            <td><a href="{%url 'edit_model_profile' user.id %}"> Update Profile </a></td>
+        </div>
+    </div>
+</div>
+</body>
+
+{% endblock %}
