@@ -31,42 +31,43 @@ def create_profile(sender, created, instance, **kwargs):
         new_profile = Profile(user = instance, bio="Placeholder bio", signup_date=timezone.now())
         new_profile.save()
 
-class Exercise(models.Model):
-    # Create an Exercise model that can store the basic information about exercises that a user would complete
-    # Each Profile would then have an associated list of exercise objects, each instance referring to the date the exercise was recorded
-    # Workout dropdown categories for the type of exercise, body part exercised, and workout intensity conducted
-    TYPES_OF_EXERCISE = (
-        (1, _('Balance')),
-        (2, _('Cardio')),
-        (3, _('Flexibility')),
-        (4, _('Strength')),
-        (5, _('Other')),
-    )
-    TYPES_OF_BODY_PARTS = (
-        (1, _('Abdominals')),
-        (2, _('Arms')),
-        (3, _('Back')),
-        (4, _('Chest')),
-        (5, _('Legs')),
-        (6, _('Shoulders')),
-        (7, _('Other')),
-    )
-    INTENSITY = (
-        (1, _('Low')),
-        (2, _('Moderate')),
-        (3, _('Vigorous')),
-    )
-    # Exercise fields
-    entry_date = models.DateTimeField(verbose_name="Date and Time of Workout")
-    exercise_type = models.CharField(max_length=15, choices=TYPES_OF_EXERCISE, default=1,)
-    body_part_exercised = models.CharField(max_length=15, choices=TYPES_OF_BODY_PARTS, default=1,)
-    exercise_intensity = models.CharField(max_length=15, choices=INTENSITY, default=1,)
-    time = models.PositiveSmallIntegerField(verbose_name="Length of Workout (in minutes)", null=True)
-    journal = models.CharField(verbose_name="Post-Workout Thoughts", max_length=200, null=True)
-    points_earned = models.PositiveIntegerField(verbose_name="Points from Workout", default=5)
-
-    def __str__(self):
-        return "Earned " + str(self.points_earned) + " with a workout on " + self.entry_date + ", focused on " + self.body_part_exercised + " with " + self.exercise_type + " exercises for " + str(self.time) + " minutes"
+### NOT CURRENTLY BEING USED (REFER INSTEAD TO dashboard/models.py) - DO NOT DELETE, CONTAINS USEFUL CODE ###
+#class Exercise(models.Model):
+#    # Create an Exercise model that can store the basic information about exercises that a user would complete
+#    # Each Profile would then have an associated list of exercise objects, each instance referring to the date the exercise was recorded
+#    # Workout dropdown categories for the type of exercise, body part exercised, and workout intensity conducted
+#    TYPES_OF_EXERCISE = (
+#        (1, _('Balance')),
+#        (2, _('Cardio')),
+#        (3, _('Flexibility')),
+#        (4, _('Strength')),
+#        (5, _('Other')),
+#    )
+#    TYPES_OF_BODY_PARTS = (
+#        (1, _('Abdominals')),
+#        (2, _('Arms')),
+#        (3, _('Back')),
+#        (4, _('Chest')),
+#        (5, _('Legs')),
+#        (6, _('Shoulders')),
+#        (7, _('Other')),
+#    )
+#    INTENSITY = (
+#        (1, _('Low')),
+#        (2, _('Moderate')),
+#        (3, _('Vigorous')),
+#    )
+#    # Exercise fields
+#    entry_date = models.DateTimeField(verbose_name="Date and Time of Workout")
+#    exercise_type = models.CharField(max_length=15, choices=TYPES_OF_EXERCISE, default=1,)
+#    body_part_exercised = models.CharField(max_length=15, choices=TYPES_OF_BODY_PARTS, default=1,)
+#    exercise_intensity = models.CharField(max_length=15, choices=INTENSITY, default=1,)
+#    time = models.PositiveSmallIntegerField(verbose_name="Length of Workout (in minutes)", null=True)
+#    journal = models.CharField(verbose_name="Post-Workout Thoughts", max_length=200, null=True)
+#    points_earned = models.PositiveIntegerField(verbose_name="Points from Workout", default=5)
+#
+#    def __str__(self):
+#        return "Earned " + str(self.points_earned) + " with a workout on " + self.entry_date + ", focused on " + self.body_part_exercised + " with " + self.exercise_type + " exercises for " + str(self.time) + " minutes"
 
 
 
