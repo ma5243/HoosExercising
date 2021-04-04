@@ -50,4 +50,3 @@ class EditProfileView(generic.UpdateView):
 
 
 
-

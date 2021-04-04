@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'oauth',
+    'dashboard.apps.DashboardConfig',
 ]
 
 MIDDLEWARE = [
@@ -112,6 +113,7 @@ else:
     import dj_database_url
     DATABASES = {}
     DATABASES['default'] = dj_database_url.config(conn_max_age=1200, ssl_require=True)
+    DATABASES = {}
 
 
 # Password validation

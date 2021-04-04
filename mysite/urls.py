@@ -26,5 +26,6 @@ urlpatterns = [
     path('editProfile/<int:pk>/', views.EditProfileView.as_view(), name='edit_model_profile'),
     path('', TemplateView.as_view(template_name="oauth/index.html")),
     path('accounts/', include('allauth.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('logout', LogoutView.as_view()),
 ]
