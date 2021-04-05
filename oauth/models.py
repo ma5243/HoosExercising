@@ -14,6 +14,7 @@ class Profile(models.Model):
     signup_date = models.DateField(verbose_name="User signup date")
 
     bio = models.CharField(verbose_name="User Bio", max_length=200, null=True)
+    #TODO add stringify function for height
     height = models.PositiveSmallIntegerField(verbose_name="Height in inches", null=True) # Doesn't allow for fractional height, integers only
     weight = models.PositiveSmallIntegerField(verbose_name="Weight in pounds", null=True) 
 
@@ -21,7 +22,7 @@ class Profile(models.Model):
 
 
     def __str__(self):
-        return self.user.first_name + " " + self.user.last_name + ": " + str(self.points) + " accumulated points"
+        return self.user.first_name + " " + self.user.last_name + "(" + str(self.pk) + "): " + str(self.points) + " accumulated points"
 
 
 # Allauth fires a post_save signal when a new user signs up.

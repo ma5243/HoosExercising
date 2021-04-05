@@ -22,9 +22,10 @@ from oauth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('profile/', TemplateView.as_view(template_name="oauth/profile.html"), name='profile'),
-    path('editProfile/<int:pk>/', views.EditProfileView.as_view(), name='edit_model_profile'),
-    path('', TemplateView.as_view(template_name="oauth/index.html")),
+    path('profile/', views.self_profile, name='profile'),
+    path('profile/<int:profile_id>/', views.specific_profile, name='specific_profile'),
+    path('profile/edit/', views.edit_or_redirect, name='edit_profile'),
+    path('', TemplateView.as_view(template_name="oauth/index.html"), name='index'),
     path('accounts/', include('allauth.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('logout', LogoutView.as_view()),
