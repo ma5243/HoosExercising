@@ -41,7 +41,7 @@ class EditProfileView(generic.UpdateView):
             profile.bio = cd['bio']
             profile.height = cd['height']
             profile.weight = cd['weight']
-            profile.points = cd['points']
+            #profile.points = cd['points']
             profile.save()
 
             return HttpResponseRedirect(reverse('profile'))
