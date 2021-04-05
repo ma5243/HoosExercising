@@ -10,7 +10,7 @@ from django.urls import reverse
 
 def index(request):
     template = loader.get_template('dashboard/index.html')
-    user_exercises = Exercise.objects.filter(owner__exact=13)
+    user_exercises = Exercise.objects.filter(owner__exact=request.user.id)
 
     context = {
         'user_exercises': user_exercises,
