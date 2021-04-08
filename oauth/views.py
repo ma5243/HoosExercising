@@ -1,12 +1,20 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.http.response import HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
-from django.urls import reverse 
+from django.urls import reverse
+from django.template import loader
 
 from .models import Profile
 from .profileform import ProfileModelForm
 
+
+def index(request):
+    print('Test')
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/dashboard')
+    template = loader.get_template('oauth/index.html')
+    return HttpResponse(template.render({}, request))
 
 # Entrypoint for the url /profile/
 # We default to showing the logged in user's profile when not given a specifc ID, redirecting to index when not authenticated.
