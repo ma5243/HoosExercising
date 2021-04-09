@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -99,21 +98,17 @@ if 'TRAVIS' in os.environ:
             'PORT': ''
         }
     }
-elif sys.argv[1:2] == ['test']:
+else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3'
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'dev_database',
+            'USER': 'postgres',
+            'PASSWORD': 'testing',
+            'HOST': 'localhost',
+            'PORT': '5432'
         }
     }
-
-else:
-    from dotenv import load_dotenv
-    load_dotenv()
-    import dj_database_url
-    DATABASES = {}
-    DATABASES['default'] = dj_database_url.config(conn_max_age=1200, ssl_require=True)
-    DATABASES = {}
 
 
 # Password validation
