@@ -7,3 +7,4 @@ bootstrap4
 dj-database-url
 python-dotenv
 psycopg2
+Pillow

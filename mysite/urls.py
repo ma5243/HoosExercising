@@ -18,16 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
+
 from oauth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('profile/', views.self_profile, name='profile'),
-    path('profile/<int:profile_id>/', views.specific_profile, name='specific_profile'),
-    path('profile/edit/', views.edit_or_redirect, name='edit_profile'),
-    #path('', TemplateView.as_view(template_name="oauth/index.html"), name='index'),
+    path('profile/', include('oauth.urls')),
     path('', views.index, name='index'),
     path('accounts/', include('allauth.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('logout', LogoutView.as_view()),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

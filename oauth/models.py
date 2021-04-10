@@ -1,20 +1,21 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from django.urls import reverse
+from django.conf import settings
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+
+
 
 class Profile(models.Model):
     # Wrap the User object within a Profile, gives name and email.
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE,primary_key=True)
     signup_date = models.DateField(verbose_name="User signup date")
 
+    profile_photo = models.ImageField(verbose_name="Profile picure", upload_to='profile_photos/', null=True) 
     bio = models.CharField(verbose_name="User Bio", max_length=200, null=True)
-    #TODO add stringify function for height
     height = models.PositiveSmallIntegerField(verbose_name="Height in inches", null=True) # Doesn't allow for fractional height, integers only
     weight = models.PositiveSmallIntegerField(verbose_name="Weight in pounds", null=True) 
 
@@ -24,6 +25,24 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name + "(" + str(self.pk) + "): " + str(self.points) + " accumulated points"
 
+    # Get the profile photo path for the user 
+    # Returns just a placeholder if not set, otherwise returns the actual photo
+    # TODO scale photo
+    def photo_or_placeholder(self):
+        if self.profile_photo and hasattr(self.profile_photo, 'url'):
+            return self.profile_photo.url
+        return settings.STATIC_URL + '/profile_placeholder.jpg'
+
+    # Get the human-readable height for a user.
+    # Returns a tuple of (feet, inches) which is (0,0) on invalid input
+    @property
+    def readable_height(self):
+        # Integer divide by 12 to get feet, remainder is inches
+        if not self.height or self.height <= 0:
+            return (0,0)
+        ft = self.height // 12
+        inches = self.height % 12
+        return (ft, inches)
 
 # Allauth fires a post_save signal when a new user signs up.
 # We can catch this signal and create a sensible default profile and initialize the one-to-one relationship.

@@ -4,6 +4,25 @@ from django.contrib.auth import get_user_model
 
 from .models import Profile
 
+class ProfileModelTest(TestCase):
+    # Test the height stringification on a normal case
+    def test_height_normal(self):
+        prof = create_user().profile
+        prof.height = 74 # 6 ft 2 inches
+        self.assertTupleEqual((6, 2), prof.readable_height)
+    def test_height_negative(self):
+        prof = create_user().profile
+        prof.height = -12
+        self.assertTupleEqual((0, 0), prof.readable_height)
+    def test_height_boundary(self):
+        prof = create_user().profile
+        prof.height = 72
+        self.assertTupleEqual((6, 0), prof.readable_height)
+    def test_height_boundary2(self):
+        prof = create_user().profile
+        prof.height = 71
+        self.assertTupleEqual((5, 11), prof.readable_height)
+
 class ProfileCreationTest(TestCase):
     # Create a new user and make sure that an associated profile is created as well.
     def test_create_profile(self):
@@ -17,39 +36,41 @@ def create_user(username="Tester", first_name="John", last_name="Doe", email="jd
     new_user = User.objects.create(username = username, first_name = first_name, last_name = last_name, email = email)
     return new_user
 
-class ProfileUpdateTest(TestCase):
+class ProfilePageTest(TestCase):
     # Basic test, ensure that user's characteristics and the edit profile button shows up on their own profile page.
     def test_new_profile(self):
         new_user = create_user(first_name = 'new_prof_test')
         new_user.profile.weight = 1234
+        new_user.profile.points = 9999
         new_user.profile.bio = "unit test bio"
         new_user.profile.save()
         
         self.client.force_login(new_user)
         response = self.client.get(reverse('profile'))
         self.assertContains(response, '1234')
+        self.assertContains(response, 9999)
         self.assertContains(response, 'unit test bio')
-        self.assertContains(response, 'Update Profile')
+        self.assertContains(response, 'Edit')
 
     # Test to ensure that updating the profile with a POST actually changes the profile page.
     def test_profile_change(self):
         new_user = create_user(first_name = 'update_test')
-        new_user.profile.weight = 555
+        new_user.profile.weight = 74
         new_user.profile.bio = "I should be changed"
         new_user.profile.save()
         self.client.force_login(new_user)
         self.client.post(reverse('edit_profile'), {
             'bio': 'New bio',
-            'height': 123,
+            'height': 72,
             'weight': 75,
-            'points': 0
+            'points': 0,
         })
         response = self.client.get(reverse('profile'))
         self.assertNotContains(response,'I should be changed')
-        self.assertNotContains(response, '555')
+        self.assertNotContains(response, '6 ft 2 in')
         self.assertContains(response, 'New bio')
-        self.assertContains(response, '123')
 
 
-
-    # Make sure that trying to update the profile with an invalid PK returns a 404
+    def test_nonexistent_profile_id(self):
+        response = self.client.get(reverse('profile') + '/999')
+        self.assertEqual(response.status_code, 404)

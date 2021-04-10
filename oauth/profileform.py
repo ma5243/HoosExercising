@@ -3,13 +3,7 @@ from .models import Profile
 
 
 class ProfileModelForm(forms.ModelForm):
+    profile_photo = forms.ImageField(required=False)
     class Meta:
         model = Profile
-        fields = ["height","weight","bio",]
-        #exclude = {"user",}
-        #label = {
-        #    "height": "Height",
-        #    "weight": "Weight",
-        #    "points": "points",
-        #    "bio": "Bio"
-        #}
+        fields = ["height","weight","bio"]

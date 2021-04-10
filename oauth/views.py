@@ -1,3 +1,4 @@
+from dashboard.models import Exercise
 from django.http import HttpResponseRedirect, HttpResponse
 from django.http.response import HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
@@ -22,7 +23,9 @@ def self_profile(request):
     if not request.user.is_authenticated: 
         return HttpResponseRedirect(reverse('index')) # TODO show message on index page to login
     
-    return ProfileView.as_view()(request, pk=request.user.id) # as_view returns a callable, must give request + kwargs
+    # as_view returns a callable, must give request + kwargs
+    # TODO trim 
+    return ProfileView.as_view()(request, pk=request.user.id, exercise_list=Exercise.objects.filter(owner__exact=request.user.profile.pk).order_by('-entry_date')) 
 
 # Entrypoint for /profile/<int:profile_id>/ , gets a specific profile from profile pk
 # Does not require authentication, so even not logged in users can view.
@@ -31,7 +34,7 @@ def self_profile(request):
 def specific_profile(request, profile_id):
     if not Profile.objects.filter(pk=profile_id).exists():
         return HttpResponseNotFound('Error: profile with that ID not found')
-    return ProfileView.as_view()(request, pk=profile_id)
+    return ProfileView.as_view()(request, pk=profile_id, exercise_list=Exercise.objects.filter(owner__exact=profile_id).order_by('-entry_date'))
     
 class ProfileView(generic.DetailView):
     model = Profile
@@ -42,6 +45,11 @@ class ProfileView(generic.DetailView):
     def get_object(self):
         profile = get_object_or_404(Profile, pk=self.kwargs.get('pk'))
         return profile
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProfileView, self).get_context_data(*args, **kwargs)
+        context['exercise_list'] = self.kwargs.get('exercise_list')
+        return context
 
 
 # Entrypoint for /profile/edit.
@@ -55,9 +63,6 @@ class EditProfileView(generic.UpdateView):
     template_name = 'oauth/updateProfile.html'
     form_class = ProfileModelForm
 
-    # TODO consider moving away from a primary-key based URL, just use user object instead.
-    # TODO handle 404s better when pk is not own. Tests needed 
-    # TODO make sure can only update when trying to edit own profile
     def get_obj(self):
         return self.request.user.profile
 
@@ -73,7 +78,12 @@ class EditProfileView(generic.UpdateView):
             profile.bio = cd['bio']
             profile.height = cd['height']
             profile.weight = cd['weight']
-            #profile.points = cd['points']
+
+            try:
+                new_photo = request.FILES['profile_photo']
+                profile.profile_photo = new_photo
+            except Exception:
+                pass
             profile.save()
 
             return HttpResponseRedirect(reverse('profile'))
