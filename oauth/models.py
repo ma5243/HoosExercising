@@ -31,7 +31,7 @@ class Profile(models.Model):
     def photo_or_placeholder(self):
         if self.profile_photo and hasattr(self.profile_photo, 'url'):
             return self.profile_photo.url
-        return settings.STATIC_URL + '/profile_placeholder.jpg'
+        return settings.STATIC_URL + 'profile_placeholder.jpg'
 
     # Get the human-readable height for a user.
     # Returns a tuple of (feet, inches) which is (0,0) on invalid input
