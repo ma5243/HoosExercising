@@ -8,3 +8,4 @@ dj-database-url
 python-dotenv
 psycopg2
 Pillow
+spotipy
