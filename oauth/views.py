@@ -1,3 +1,4 @@
+
 from dashboard.models import Exercise
 from django.http import HttpResponseRedirect, HttpResponse
 from django.http.response import HttpResponseNotFound
@@ -90,5 +91,9 @@ class EditProfileView(generic.UpdateView):
         else:
             return render(request, 'oauth/updateProfile.html', {'form': form})
 
+class LeaderboardView(generic.ListView):
+    model = Profile
+    template_name = 'oauth/leaderboard.html'
+    context_object_name = 'latest_leaderboard'
 
 
