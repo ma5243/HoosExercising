@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'oauth',
     'dashboard.apps.DashboardConfig',
     'spotify.apps.SpotifyConfig',
+    'spotipy',
 ]
 
 MIDDLEWARE = [
