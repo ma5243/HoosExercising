@@ -1,0 +1,152 @@
+{% load socialaccount %}
+{% load bootstrap4 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+<html>
+    <head>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css"
+            integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg=="
+            crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
+    </head>
+    <style type="text/css">
+        .bootstrap-tagsinput {
+            width: 100%;
+        }
+    
+        .label-info {
+            background-color: #17a2b8;
+    
+        }
+    
+        .label {
+            display: inline-block;
+            padding: .25em .4em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out,
+                border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+        /*.our-taginput {
+            
+        }*/
+        .primary {
+            top: 20px;
+            width: 75%;
+        }
+        /* .add-exercise {
+            top: 10px;
+            position: relative;
+        } */
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .btn-journal {
+            margin-top: -6;
+            margin-bottom: -5;
+            margin-right: -5px;
+            float: right;
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+        button {
+            border-radius: 15px;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: auto;
+            height: auto;
+        }
+
+    </style>
+        <script>
+            $(document).ready(function () {
+                $('#etable').DataTable();
+                $('#navbar-inner').width($('#main-card').width());
+            });
+        </script>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"
+        integrity="sha512-VvWznBcyBJK71YKEKDMpZ0pCVxjNuKwApp4zLF3ul+CiflQi6aIJR+aZCP/qWsoFBA28avL5T5HA+RE+zrGQYg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-angular.min.js"
+        integrity="sha512-KT0oYlhnDf0XQfjuCS/QIw4sjTHdkefv8rOJY5HHdNEZ6AmOh1DW/ZdSqpipe+2AEXym5D0khNu95Mtmw9VNKg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="mx-auto" id="navbar-inner" style="padding: 0; margin: 0;">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/music">Music</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" style="margin-right:8px;">
+                        <a href="/profile" class="navbar-text">Profile</a>
+                    </li>
+                </ul>        
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>Hoos Listening?</h1>
+        <p><i>Need some music recommendations for your workout? We've got you covered</i></p>
+    </div>
+    <div class="container">
+        <h2>{{top.title}}</h2>
+        <p>Get some inspiration for your exercise jams with Spotify's Top Hits playlist!</p>
+        <img src="{{top.image}}" width=5% class="center">
+        <button><a href='{{top.link}}'>Listen to Today's Top Hits on Spotify</a></button>
+    </div>
+    <p></p>
+    <div class="container">
+        <h2>This Week's Recommended Jams</h2>
+        <p>Our team has put together our top 5 recommended workout songs for the week, pulled directly from Spotify! Check back next week for more recommendations!</p>   
+        {% for song in music %}
+            <div class="container">
+                <h3>{{song.title}}</h3>
+                <h6>{{song.artist}}</h6>
+                <img src="{{song.image}}" width=5% class="center">
+                <button><a href='{{song.link}}'>Play now on Spotify</a></button>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
+
+<!--Source: https://www.codegrepper.com/code-examples/html/how+to+make+a+clickable+button+that+open+another+page+in+html-->
+<!--Source: https://www.programiz.com/python-programming/list-->
+<!--Source: https://stackoverflow.com/questions/29360395/display-images-in-django-->
+<!--Source: https://www.w3schools.com/howto/howto_css_image_center.asp-->
+<!--Source: https://html.form.guide/snippets/css-button-rounded-corners/#:~:text=To%20make%20the%20div's%20borders,more%20rounded%20the%20edge%20becomes.-->
+<!--Source: https://stackoverflow.com/questions/37879447/padding-the-space-above-a-css-button-->
+<!--Source: https://www.tutorialspoint.com/How-to-make-text-italic-in-HTML#:~:text=To%20make%20text%20italic%20in%20HTML%2C%20use%20the,which%20renders%20as%20emphasized%20text.-->

@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'oauth',
     'dashboard.apps.DashboardConfig',
+    'spotify.apps.SpotifyConfig',
+    'spotipy',
 ]
 
 MIDDLEWARE = [
