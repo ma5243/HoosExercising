@@ -1,0 +1,86 @@
+{% load socialaccount %}
+{% load bootstrap4 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+<html>
+    <head>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css"
+            integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg=="
+            crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
+    </head>
+    <style type="text/css">
+        .bootstrap-tagsinput {
+            width: 100%;
+        }
+    
+        .label-info {
+            background-color: #17a2b8;
+    
+        }
+    
+        .label {
+            display: inline-block;
+            padding: .25em .4em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out,
+                border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+        /*.our-taginput {
+            
+        }*/
+        .primary {
+            top: 20px;
+            width: 75%;
+        }
+        /* .add-exercise {
+            top: 10px;
+            position: relative;
+        } */
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .btn-journal {
+            margin-top: -6;
+            margin-bottom: -5;
+            margin-right: -5px;
+            float: right;
+        }
+
+    </style>
+        <script>
+            $(document).ready(function () {
+                $('#etable').DataTable();
+                $('#navbar-inner').width($('#main-card').width());
+            });
+        </script>
+<body>
+    <h1>Hoos Listening?</h1>
+    <p>Below are our team's Top 5 recommended workout songs for the week, pulled directly from Spotify! Check back next week for more recommendations!</p>
+    <h2>{{top.title}}</h2>
+    <img src="{{top.image}}" width=50%>
+    <button><a href='{{top.link}}'>Play on Spotify</a></button>
+    {% for song in music %}
+        <h2>{{song.title}}</h2>
+        <h3>{{song.artist}}</h3>
+        <img src="{{song.image}}" width=50%>
+        <button><a href='{{song.link}}'>Play on Spotify</a></button>
+    {% endfor %}
+</body>
+
+</html>
+
+<!--Source: https://www.codegrepper.com/code-examples/html/how+to+make+a+clickable+button+that+open+another+page+in+html-->
+<!--Source: https://www.programiz.com/python-programming/list-->
