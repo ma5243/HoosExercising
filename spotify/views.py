@@ -55,5 +55,13 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 ###########
-# SOURCE: https://www.programiz.com/python-programming/list
+# SOURCES: https://www.programiz.com/python-programming/list
+#          https://developer.spotify.com/documentation/web-api/
+#          https://developer.spotify.com/documentation/web-api/reference/
+#          https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow
+#          https://www.youtube.com/watch?v=xdq6Gz33khQ
+#          https://github.com/codingforentrepreneurs/30-Days-of-Python/tree/master/tutorial-reference/Day%2019/notebooks
+#          https://github.com/plamere/spotipy/issues/83
+#          https://spotipy.readthedocs.io/en/2.17.1/
+#          https://stackoverflow.com/questions/56791883/typeerror-can-only-concatenate-str-not-set-to-str
 ###########
