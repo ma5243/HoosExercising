@@ -44,6 +44,9 @@ class Profile(models.Model):
         inches = self.height % 12
         return (ft, inches)
 
+    class Meta:
+        ordering = ['-points']
+
 # Allauth fires a post_save signal when a new user signs up.
 # We can catch this signal and create a sensible default profile and initialize the one-to-one relationship.
 @receiver(post_save, sender = settings.AUTH_USER_MODEL)
