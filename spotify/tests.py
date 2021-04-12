@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from views import obtain_spotify_object, retrieve_song, retrieve_top_hits
+from . import views
 
 # Create your tests here.
 
@@ -10,27 +10,27 @@ class SpotifyTests(TestCase):
 
     def test_obtain_spotify_object(self):
         # Test that we obtain a non-null Spotipy object
-        obj = obtain_spotify_object(self.client_id, self.client_secret)
+        obj = views.obtain_spotify_object(self.client_id, self.client_secret)
         self.assertIsNotNone(obj)
 
     def test_retrieve_top_hits(self):
         # Test that Spotify retrieves the correct playlist
-        obj = obtain_spotify_object(self.client_id, self.client_secret)
-        top_hits = retrieve_top_hits(obj)
-        self.assertEqual(top_hits['name'], "Today's Top Hits")  
+        obj = views.obtain_spotify_object(self.client_id, self.client_secret)
+        top_hits = views.retrieve_top_hits(obj)
+        self.assertEqual(top_hits['title'], "Today's Top Hits")  
 
     def test_retrieve_song_correct_title(self):
-        obj = obtain_spotify_object(self.client_id, self.client_secret)
+        obj = views.obtain_spotify_object(self.client_id, self.client_secret)
         song_title = "Juicy"
         song_artist = "Doja Cat"
-        test_song = retrieve_song(obj, song_title, song_artist)
+        test_song = views.retrieve_song(obj, song_title, song_artist)
         self.assertEqual(test_song['title'], song_title)  
 
     def test_retrieve_song_correct_artist(self):
-        obj = obtain_spotify_object(self.client_id, self.client_secret)
+        obj = views.obtain_spotify_object(self.client_id, self.client_secret)
         song_title = "Juicy"
         song_artist = "Doja Cat"
-        test_song = retrieve_song(obj, song_title, song_artist)
+        test_song = views.retrieve_song(obj, song_title, song_artist)
         self.assertEqual(test_song['artist'], song_artist) 
 
 ###############################
