@@ -1,22 +1,114 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"
-      xmlns:font-size="http://www.w3.org/1999/xhtml" xmlns:font-size="http://www.w3.org/1999/xhtml">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+{% load socialaccount %}
+{% load bootstrap4 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Leaderboard</title>
-</head>
+<html>
+    <head>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css"
+            integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg=="
+            crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
+    </head>
+    <style type="text/css">
+        .bootstrap-tagsinput {
+            width: 100%;
+        }
+
+        .label-info {
+            background-color: #17a2b8;
+
+        }
+
+        .label {
+            display: inline-block;
+            padding: .25em .4em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out,
+                border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+        /*.our-taginput {
+
+        }*/
+        .primary {
+            top: 20px;
+            width: 75%;
+        }
+        /* .add-exercise {
+            top: 10px;
+            position: relative;
+        } */
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .btn-journal {
+            margin-top: -6;
+            margin-bottom: -5;
+            margin-right: -5px;
+            float: right;
+        }
+
+    </style>
+        <script>
+            $(document).ready(function () {
+                $('#etable').DataTable();
+                $('#navbar-inner').width($('#main-card').width());
+            });
+        </script>
 <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"
+        integrity="sha512-VvWznBcyBJK71YKEKDMpZ0pCVxjNuKwApp4zLF3ul+CiflQi6aIJR+aZCP/qWsoFBA28avL5T5HA+RE+zrGQYg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-angular.min.js"
+        integrity="sha512-KT0oYlhnDf0XQfjuCS/QIw4sjTHdkefv8rOJY5HHdNEZ6AmOh1DW/ZdSqpipe+2AEXym5D0khNu95Mtmw9VNKg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="mx-auto" id="navbar-inner" style="padding: 0; margin: 0;">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/leaderboard">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/music">Music</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" style="margin-right:8px;">
+                        <a href="/profile" class="navbar-text">Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <h1 class="center downp uppad">Leaderboard </h1>
     {% if latest_leaderboard %}
 
         <table class="table table-dark table-bordered form-control-inline center ">
             {% for profile in latest_leaderboard %}
             <tr class="center">
-                <td class="center form-control-inline">{{ profile.user.username }}</td>
+                <td class="center form-control-inline">{{ profile.user.first_name }} {{ profile.points }}</td>
             </tr>
             {% endfor %}
         </table>
