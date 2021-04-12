@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
@@ -15,3 +18,12 @@ class Exercise(models.Model):
 
     def __str__(self):
         return "(" + str(self.owner) + "): " + self.type + " - " + self.name 
+
+# We can catch a signal sent by the exercise model to increase the user's points
+# Prevents us from having to iterate over all exercises, can instead be constant time.
+@receiver(post_save, sender = Exercise)
+def update_points(sender, instance, created, **kwargs):
+    User = get_user_model()
+    profile = User.objects.get(id = instance.owner).profile
+    profile.points += 5 # Hardcoded 5, TODO update dynamically based on intensity/time
+    profile.save()
