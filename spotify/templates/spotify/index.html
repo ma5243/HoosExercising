@@ -117,27 +117,35 @@
         </div>
     </nav>
     <div class="container">
-        <h1>Hoos Listening?</h1>
-        <p><i>Need some music recommendations for your workout? We've got you covered</i></p>
-    </div>
-    <div class="container">
-        <h2>{{top.title}}</h2>
-        <p>Get some inspiration for your exercise jams with Spotify's Top Hits playlist!</p>
-        <img src="{{top.image}}" width=5% class="center">
-        <button><a href='{{top.link}}'>Listen to Today's Top Hits on Spotify</a></button>
-    </div>
-    <p></p>
-    <div class="container">
-        <h2>This Week's Recommended Jams</h2>
-        <p>Our team has put together our top 5 recommended workout songs for the week, pulled directly from Spotify! Check back next week for more recommendations!</p>   
-        {% for song in music %}
-            <div class="container">
-                <h3>{{song.title}}</h3>
-                <h6>{{song.artist}}</h6>
-                <img src="{{song.image}}" width=5% class="center">
-                <button><a href='{{song.link}}'>Play now on Spotify</a></button>
+        <div class="card primary mx-auto" id="main-card">
+            <div class="card-body">
+                    <h3>Hoos Listening?</h3><p>Need some music recommendations for your workout? We've got you covered with today's hits and this week's recommended jams.</p>
+                    <hr />
+                    <div class="container" style="padding: 0px">
+                        <div class="row">
+                            <div class="col-sm">
+                                <a href='{{top.link}}' style='text-decoration: none'>
+                                    <img src="{{top.image}}" width="200px">
+                                    <h5 style="display: inline; padding-left: 10px">Today's Top Hits</h5>
+                                </a>
+                            </div>
+                            <div class="col-sm" >
+                                {% for song in music %}
+                                    <div class="row">
+                                        <a href="{{song.link}}" style='text-decoration: none'>
+                                            <img src="{{song.image}}" width="40px">
+                                            {{song.title}}
+                                            <span>&#183;</span>
+                                            {{song.artist}}
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                  </ul>                  
             </div>
-        {% endfor %}
+        </div>
     </div>
 </body>
 
