@@ -115,7 +115,7 @@
                     <tbody>
                         {% for prof in latest_leaderboard %}
                             <tr>
-                                <td><a href = "/profile/prof.user.pk">{{prof.user.first_name}} {{prof.user.last_name}}</a></td>
+                                <td><a href="{% url 'specific_profile' prof.id >{{prof.user.first_name}} {{prof.user.last_name}}</a></td>
                                 <td>{{prof.points}}</td>
                             </tr>    
                         {% endfor %}
