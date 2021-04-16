@@ -25,7 +25,7 @@ from oauth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('profile/', include('oauth.urls')),
+    path('', include('oauth.urls')),
     path('leaderboard/',views.LeaderboardView.as_view()),
     path('', views.index, name='index'),
     path('accounts/', include('allauth.urls')),
