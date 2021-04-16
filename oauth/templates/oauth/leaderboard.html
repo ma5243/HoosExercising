@@ -62,7 +62,9 @@
     </style>
         <script>
             $(document).ready(function () {
-                $('#etable').DataTable();
+                $('#etable').DataTable({
+                    order: [[1, 'desc']]
+                });
                 $('#navbar-inner').width($('#main-card').width());
             });
         </script>
