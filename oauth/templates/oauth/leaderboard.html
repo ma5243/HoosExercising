@@ -115,7 +115,7 @@
                     <tbody>
                         {% for profile in latest_leaderboard %}
                             <tr>
-                                <td>{{profile.user.first_name}} {{profile.user.last_name}}</td>
+                                <td a href = "/profile/profile.user.pk">{{profile.user.first_name}} {{profile.user.last_name}}</td>
                                 <td>{{profile.points}}</td>
                             </tr>    
                         {% endfor %}
