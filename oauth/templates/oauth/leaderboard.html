@@ -113,10 +113,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {% for profile in latest_leaderboard %}
+                        {% for prof in latest_leaderboard %}
                             <tr>
-                                <td a href = "/profile/profile.user.pk">{{profile.user.first_name}} {{profile.user.last_name}}</td>
-                                <td>{{profile.points}}</td>
+                                <td><a href = "/profile/prof.user.pk">{{prof.user.first_name}} {{prof.user.last_name}}</a></td>
+                                <td>{{prof.points}}</td>
                             </tr>    
                         {% endfor %}
                     </tbody>
