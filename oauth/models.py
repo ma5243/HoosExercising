@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -27,9 +29,9 @@ class Profile(models.Model):
 
     # Get the profile photo path for the user 
     # Returns just a placeholder if not set, otherwise returns the actual photo
-    # TODO scale photo
+    # The heroku filesystem is ephemerakl, so photos get deleted over time.
     def photo_or_placeholder(self):
-        if self.profile_photo and hasattr(self.profile_photo, 'url'):
+        if self.profile_photo and hasattr(self.profile_photo, 'url') and os.path.isfile(settings.MEDIA_ROOT + '/' + self.profile_photo.name):
             return self.profile_photo.url
         return settings.STATIC_URL + 'profile_placeholder.jpg'
 
