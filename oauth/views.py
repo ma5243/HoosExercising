@@ -33,9 +33,14 @@ def add_friend(request):
     profile = Profile.objects.get(pk=request.user.profile.pk)
     profile.friends.add(friend_profile)
     profile.save()
+    return HttpResponseRedirect(reverse('profile') + str(friend_profile.pk))
 @login_required
 def remove_friend(request):
-    pass
+    friend_profile = Profile.objects.get(pk=request.POST['remove_friend_pk'])
+    profile = Profile.objects.get(pk=request.user.profile.pk)
+    profile.friends.remove(friend_profile)
+    profile.save()
+    return HttpResponseRedirect(reverse('profile') + str(friend_profile.pk))
 
 # Entrypoint for the url /profile/
 # We default to showing the logged in user's profile when not given a specifc ID, redirecting to index when not authenticated.
