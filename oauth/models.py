@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -21,15 +23,16 @@ class Profile(models.Model):
 
     points = models.PositiveIntegerField(verbose_name="Total accumulated points", default=0)
 
+    friends = models.ManyToManyField("self", symmetrical=True, verbose_name="Friend list", null=True)
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name + "(" + str(self.pk) + "): " + str(self.points) + " accumulated points"
 
     # Get the profile photo path for the user 
     # Returns just a placeholder if not set, otherwise returns the actual photo
-    # TODO scale photo
+    # The heroku filesystem is ephemerakl, so photos get deleted over time.
     def photo_or_placeholder(self):
-        if self.profile_photo and hasattr(self.profile_photo, 'url'):
+        if self.profile_photo and hasattr(self.profile_photo, 'url') and os.path.isfile(settings.MEDIA_ROOT + '/' + self.profile_photo.name):
             return self.profile_photo.url
         return settings.STATIC_URL + 'profile_placeholder.jpg'
 

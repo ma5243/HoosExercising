@@ -100,6 +100,9 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link mr-2 " href="/profile/friends/">Friends</a>
+                    </li>
                     <li class="nav-item" style="margin-right:8px;">
                         <a href="/profile" class="navbar-text">Profile</a>
                     </li>
@@ -120,7 +123,11 @@
                     <tbody>
                         {% for prof in latest_leaderboard %}
                             <tr>
-                                <td>{{prof.user.first_name}} {{prof.user.last_name}}</td>
+                                <td>
+                                    <a href="{% url 'profile' %}{{prof.pk}}">
+                                        {{prof.user.first_name}} {{prof.user.last_name}}
+                                    </a>
+                                </td>
                                 <td>{{prof.points}}</td>
                             </tr>    
                         {% endfor %}

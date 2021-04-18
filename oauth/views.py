@@ -1,8 +1,8 @@
-
 from dashboard.models import Exercise
 from django.http import HttpResponseRedirect, HttpResponse
 from django.http.response import HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.urls import reverse
 from django.template import loader
@@ -18,6 +18,30 @@ def index(request):
     template = loader.get_template('oauth/index.html')
     return HttpResponse(template.render({}, request))
 
+# Show a basic list of friends
+def friend_list(request):
+    profile = Profile.objects.get(pk=1)
+    return render(request, template_name='oauth/friends_list.html', context={
+        'profile': profile,
+        'friends': profile.friends.all(),
+    })
+
+# Take in the desired friend PK from POST params
+@login_required
+def add_friend(request):
+    friend_profile = Profile.objects.get(pk=request.POST['new_friend_pk'])
+    profile = Profile.objects.get(pk=request.user.profile.pk)
+    profile.friends.add(friend_profile)
+    profile.save()
+    return HttpResponseRedirect(reverse('profile') + str(friend_profile.pk))
+@login_required
+def remove_friend(request):
+    friend_profile = Profile.objects.get(pk=request.POST['remove_friend_pk'])
+    profile = Profile.objects.get(pk=request.user.profile.pk)
+    profile.friends.remove(friend_profile)
+    profile.save()
+    return HttpResponseRedirect(reverse('profile') + str(friend_profile.pk))
+
 # Entrypoint for the url /profile/
 # We default to showing the logged in user's profile when not given a specifc ID, redirecting to index when not authenticated.
 def self_profile(request):
@@ -25,8 +49,7 @@ def self_profile(request):
         return HttpResponseRedirect(reverse('index')) # TODO show message on index page to login
     
     # as_view returns a callable, must give request + kwargs
-    # TODO trim 
-    return ProfileView.as_view()(request, pk=request.user.id, exercise_list=Exercise.objects.filter(owner__exact=request.user.profile.pk).order_by('-entry_date')) 
+    return ProfileView.as_view()(request, pk=request.user.id, exercise_list=Exercise.objects.filter(owner__exact=request.user.profile.pk).order_by('-entry_date')[:8]) 
 
 # Entrypoint for /profile/<int:profile_id>/ , gets a specific profile from profile pk
 # Does not require authentication, so even not logged in users can view.
@@ -35,7 +58,7 @@ def self_profile(request):
 def specific_profile(request, profile_id):
     if not Profile.objects.filter(pk=profile_id).exists():
         return HttpResponseNotFound('Error: profile with that ID not found')
-    return ProfileView.as_view()(request, pk=profile_id, exercise_list=Exercise.objects.filter(owner__exact=profile_id).order_by('-entry_date'))
+    return ProfileView.as_view()(request, pk=profile_id, exercise_list=Exercise.objects.filter(owner__exact=profile_id).order_by('-entry_date')[:8])
     
 class ProfileView(generic.DetailView):
     model = Profile
