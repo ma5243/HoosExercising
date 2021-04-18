@@ -58,11 +58,26 @@
             margin-right: -5px;
             float: right;
         }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+        button {
+            border-radius: 15px;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: auto;
+            height: auto;
+        }
 
     </style>
         <script>
             $(document).ready(function () {
-                var table = $('#etable').DataTable();
+                $('#etable').DataTable();
                 $('#navbar-inner').width($('#main-card').width());
             });
         </script>
@@ -75,7 +90,6 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="mx-auto" id="navbar-inner" style="padding: 0; margin: 0;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -84,11 +98,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/dashboard">Exercise Dashboard <span class="sr-only">(current)</span></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Exercise Dashboard <span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/leaderboard">Leaderboard</a>
@@ -108,55 +122,14 @@
     <div class="container">
         <div class="card primary mx-auto" id="main-card">
             <div class="card-body">
-                <table class="table table-striped table-bordered" id="etable" style="width:100%">
-                    <thead>
-                      <tr>
-                        <th scope="col">Type</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Body Parts Worked</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {% for exercise in user_exercises %}
-                            <tr>
-                                <td>{{exercise.type}}</td>
-                                <td>{{exercise.name}}</td>
-                                <td>
-                                    {{exercise.parts_worked|join:', '}}
-                                    <button onclick="showJournal( {{ exercise.id }} )" class="btn btn-secondary  btn-sm btn-journal">Edit</button>
-                                </td>
-                            </tr>    
-                        {% endfor %}
-                    </tbody>
-                  </table>
-                <div class="add-exercise">
-                    <hr />
-                    <h3>Add exercise</h3>
-                    <form action="submit_exercise" method="post">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-auto">
-                                <h6>Type</h6>
-                                <input type="text" class="form-control form-control-sm" placeholder="Resistance" name="type">
-                            </div>
-                            <div class="col-auto">
-                                <h6>Name</h6>
-                                <input type="text" class="form-control form-control-sm" placeholder="Plank" name="name">
-                            </div>
-                            <div class="col">
-                                <h6>Body Parts Worked</h6>
-                                <input class="form-control" type="text" data-role="tagsinput" name="tags" value="Core">
-                            </div>
-                            <div class="col-auto">
-                                <h6><br></h6>
-                                <button type="submit" class="btn btn-primary btn-sm">Add</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <h3>Welcome!</h3>
+                <p>Here at <b>Hoos Exercising</b>, we're here to make your fitness goals easier to track and complete at UVA!</p>    
+                <p><i>Use our navigation bar above to add in new exercises, view your standing in our leaderboard, and get some new music recommendations for your workouts!</i></p>             
             </div>
         </div>
     </div>
 </body>
 
 </html>
+
+<!--Source: https://www.tutorialspoint.com/How-to-make-text-italic-in-HTML#:~:text=To%20make%20text%20italic%20in%20HTML%2C%20use%20the,which%20renders%20as%20emphasized%20text.-->

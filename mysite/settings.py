@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'spotify.apps.SpotifyConfig',
     'spotipy',
+    'homepage.apps.HomepageConfig',
 ]
 
 MIDDLEWARE = [

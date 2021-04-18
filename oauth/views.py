@@ -14,7 +14,7 @@ from .profileform import ProfileModelForm
 def index(request):
     print('Test')
     if request.user.is_authenticated:
-        return HttpResponseRedirect('/dashboard')
+        return HttpResponseRedirect('/home')
     template = loader.get_template('oauth/index.html')
     return HttpResponse(template.render({}, request))
 
