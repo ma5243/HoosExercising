@@ -74,3 +74,29 @@ class ProfilePageTest(TestCase):
     def test_nonexistent_profile_id(self):
         response = self.client.get(reverse('profile') + '/999')
         self.assertEqual(response.status_code, 404)
+    
+
+class FriendsTest(TestCase):
+    # Test that users can friend one another
+    def test_friend_basic(self):
+        friender = create_user(username="friender")
+        friend_target = create_user(username="friendtarget")
+
+        self.client.force_login(friender)
+        self.client.post(reverse('add_friend'),{
+            'new_friend_pk': friend_target.profile.pk
+        })
+        self.assertIn(friend_target.profile, friender.profile.friends.all())
+    # Test that friends can be removed
+    def test_friend_remove(self):
+        friender = create_user(username="friender")
+        friend_target = create_user(username="friendtarget")
+
+        self.client.force_login(friender)
+        self.client.post(reverse('add_friend'),{
+            'new_friend_pk': friend_target.profile.pk
+        })
+        self.client.post(reverse('remove_friend'), {
+            'remove_friend_pk': friend_target.profile.pk
+        })
+        self.assertNotIn(friend_target.profile, friender.profile.friends.all())
