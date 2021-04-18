@@ -31,5 +31,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('music/', include('spotify.urls')),
+    path('home/', include('homepage.urls')),
     path('logout', LogoutView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
