@@ -7,11 +7,10 @@ from datetime import datetime
 
 # Create your views here.
 
-#@login_required
+@login_required
 def index(request):
     template = loader.get_template('homepage/index.html')
     context = {
         
     }
     return HttpResponse(template.render(context, request))
-    #return HttpResponse("Hey I'm just testing this!")
