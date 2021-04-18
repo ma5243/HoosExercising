@@ -23,6 +23,7 @@ class Profile(models.Model):
 
     points = models.PositiveIntegerField(verbose_name="Total accumulated points", default=0)
 
+    friends = models.ManyToManyField("self", symmetrical=True, verbose_name="Friend list", null=True)
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name + "(" + str(self.pk) + "): " + str(self.points) + " accumulated points"

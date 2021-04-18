@@ -1,0 +1,20 @@
+{% extends 'oauth/base.html' %}
+
+{% load socialaccount %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% block title %}Friends of {{profile.user.first_name}}{% endblock %}
+
+{% block content %}
+
+<h1>Friends list</h1>
+
+<ul>
+{% for friend in friends %}
+    <li>{{friend.user.first_name}}</li>
+{% endfor %}
+</ul>
+{% endblock %}

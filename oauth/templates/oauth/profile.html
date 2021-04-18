@@ -66,10 +66,14 @@
           Edit
         </a>
       {% else %}
-        <a type="button" href="#" class="btn btn-block btn-success btn-lg float-end">
-          <i class="bi bi-person-plus"></i>
-          Add Friend
-        </a>
+        <form method="POST" action="{% url 'add_friend' %}" class="inline">
+          {% csrf_token %}
+          <input type="hidden" name="new_friend_pk" value="{{ displayed_profile.pk }}">
+          <button type="submit" class="btn btn-block btn-success btn-lg float-end">
+            <i class="bi bi-person-plus"></i>
+            Add Friend
+          </a>
+        </form>
       {% endif %}
     </div>
   </div>
