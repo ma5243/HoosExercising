@@ -20,7 +20,7 @@ def index(request):
 
 # Show a basic list of friends
 def friend_list(request):
-    profile = Profile.objects.get(pk=1)
+    profile = Profile.objects.get(pk=request.user.profile.pk)
     return render(request, template_name='oauth/friends_list.html', context={
         'profile': profile,
         'friends': profile.friends.all(),
