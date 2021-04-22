@@ -15,6 +15,7 @@ class Exercise(models.Model):
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=20)
     parts_worked = ArrayField(models.CharField(max_length=50), blank=True)
+    journal = models.CharField(max_length=2000)
 
     def __str__(self):
         return "(" + str(self.owner) + "): " + self.type + " - " + self.name 

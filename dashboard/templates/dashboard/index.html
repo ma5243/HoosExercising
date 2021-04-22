@@ -61,10 +61,114 @@
 
     </style>
         <script>
+
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            const csrftoken = getCookie('csrftoken');
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (settings.type == "POST" && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+            var journalOpen = false;
+            var unsavedChanges = false;
+            var currentJournal = -1;
+
+            function showJournal() {
+                $('#journal').show();
+                $('#journal-save').show();
+                $('#journal-cancel').show();
+                $.ajax({
+                    type: 'post',
+                    url: 'get_exercise',
+                    data: {
+                        id: currentJournal
+                    },
+                    success: function(msg) {
+                        $("#journal").val(msg.journal);
+                    },
+                    error: function(a, b, c) {
+                        console.log([a,b,c]);
+                    }
+                });
+                journalOpen = true;
+            }
+
+            function hideJournal() {
+                $('#journal').hide();
+                $('#journal-save').hide();
+                $('#journal-cancel').hide();
+                journalOpen = false;
+            }
+
+            function openJournal(id) {
+                if(journalOpen) return;
+                unsavedChanges = false;
+                currentJournal = id;
+                showJournal();
+            }
+
+            function submitJournal() {
+                if(!journalOpen) return;
+                $.ajax({
+                    type: 'post',
+                    url: 'set_journal',
+                    data: {
+                        id: currentJournal,
+                        journal_contents: $('#journal').val()
+                    },
+                    success: function(msg) {
+                        unsavedChanges = false;
+                        $('#save-badge').show();
+                        setTimeout(function() {
+                            $('#save-badge').hide();
+                        }, 1200);
+                    },
+                    error: function(a, b, c) {
+                        console.log([a,b,c]);
+                    }
+                });
+            }
+
+            function cancelJournal() {
+                if(!journalOpen) return;
+                if(unsavedChanges) {
+                    $('#saveDialogue').modal('show');
+                } else {
+                    closeJournal();
+                }
+            }
+
+            function closeJournal() {
+                $('#journal').val("");
+                currentJournal = -1;
+                hideJournal();
+            }
+
             $(document).ready(function () {
+                hideJournal();
+                $('#save-badge').hide();    
                 var table = $('#etable').DataTable();
                 $('#navbar-inner').width($('#main-card').width());
             });
+
         </script>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"
@@ -108,6 +212,23 @@
             </div>
         </div>
     </nav>
+    <div class="modal fade" id="saveDialogue" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">You have unsaved changes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button onclick="closeJournal()" type="button" class="btn btn-danger" data-dismiss="modal">Discard changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="card primary mx-auto" id="main-card">
             <div class="card-body">
@@ -126,13 +247,17 @@
                                 <td>{{exercise.name}}</td>
                                 <td>
                                     {{exercise.parts_worked|join:', '}}
-                                    <button onclick="showJournal( {{ exercise.id }} )" class="btn btn-secondary  btn-sm btn-journal">Edit</button>
+                                    <button onclick="openJournal( {{ exercise.id }} )" class="btn btn-secondary  btn-sm btn-journal">Add Notes</button>
                                 </td>
                             </tr>    
                         {% endfor %}
                     </tbody>
                   </table>
                 <div class="add-exercise">
+                    <textarea class="form-control" id="journal" onchange="unsavedChanges=true" style="margin-top: 6px; margin-bottom: 8px"></textarea>
+                    <button id="journal-save" onclick="submitJournal()" type="button" class="btn btn-success">Save</button>
+                    <button id="journal-cancel" onclick="cancelJournal()" type="button" class="btn btn-secondary">Close</button>
+                    <span id="save-badge" class="badge badge-success">Saved</span>
                     <hr />
                     <h3>Add exercise</h3>
                     <form action="submit_exercise" method="post">
