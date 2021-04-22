@@ -27,10 +27,6 @@ SECRET_KEY = ')fsgd@qw&4vvg-!k2(ke23j4q$1)a8o!$mavz%#2%zjs69v470'
 DEBUG = True 
 if 'HEROKU' in os.environ:
     DEBUG = False
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
