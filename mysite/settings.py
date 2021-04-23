@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = ')fsgd@qw&4vvg-!k2(ke23j4q$1)a8o!$mavz%#2%zjs69v470'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = True 
+if 'HEROKU' in os.environ:
+    DEBUG = False
 
 
 # Application definition
