@@ -124,10 +124,13 @@
             }
 
             function openJournal(id) {
-                if(journalOpen) return;
-                unsavedChanges = false;
-                currentJournal = id;
-                showJournal();
+                if(journalOpen) {
+                    cancelJournal(id);
+                } else {
+                    unsavedChanges = false;
+                    currentJournal = id;
+                    showJournal();
+                }
             }
 
             function submitJournal() {
@@ -152,12 +155,17 @@
                 });
             }
 
-            function cancelJournal() {
+            function cancelJournal(nextJournalID) {
                 if(!journalOpen) return;
                 if(unsavedChanges) {
                     $('#saveDialogue').modal('show');
                 } else {
-                    closeJournal();
+                    if(nextJournalID != undefined) {
+                        journalOpen = false;
+                        openJournal(nextJournalID);
+                    } else {
+                        closeJournal();
+                    }
                 }
             }
 
