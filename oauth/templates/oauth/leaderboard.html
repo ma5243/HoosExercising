@@ -64,9 +64,68 @@
 
     </style>
         <script>
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            const csrftoken = getCookie('csrftoken');
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (settings.type == "POST" && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+
+            function addFriend(pk) {
+                $.ajax({
+                    type: 'post',
+                    url: '/profile/friends/add',
+                    data: {
+                        new_friend_pk: pk
+                    },
+                    success: function(msg) {
+                        location.reload();
+                    },
+                    error: function(a, b, c) {
+                        console.log([a,b,c]);
+                    }
+                });
+            }
+
+            function removeFriend(pk) {
+                $.ajax({
+                    type: 'post',
+                    url: '/profile/friends/remove',
+                    data: {
+                        remove_friend_pk: pk
+                    },
+                    success: function(msg) {
+                        location.reload();
+                    },
+                    error: function(a, b, c) {
+                        console.log([a,b,c]);
+                    }
+                });
+            }
+
             $(document).ready(function () {
                 $('#etable').DataTable({
-                    order: [[1, 'desc']]
+                    order: [[1, 'desc']],
+                    columnDefs: [{width: "20%", targets: 1}]
                 });
                 $('#navbar-inner').width($('#main-card').width());
             });
@@ -130,6 +189,24 @@
                                     <a href="{% url 'profile' %}{{prof.pk}}">
                                         {{prof.user.first_name}} {{prof.user.last_name}}
                                     </a>
+                                    {% if prof.pk == user.profile.pk %}
+                                    <button onclick="removeFriend({{ prof.pk }})" style="padding-left: 5px; padding-right: 5px" class="btn btn-primary btn-sm float-right" type="button" disabled><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                      </svg>
+                                    </button>
+                                    {% elif prof in user.profile.friends.all %}
+                                    <button onclick="removeFriend({{ prof.pk }})" style="padding-left: 5px; padding-right: 5px" class="btn btn-danger btn-sm float-right" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+                                      </svg>                                      
+                                    </button>
+                                    {% else %}
+                                    <button onclick="addFriend({{ prof.pk }})" style="padding-left: 5px; padding-right: 5px" class="btn btn-primary btn-sm float-right" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                      </svg>
+                                    </button>
+                                    {% endif %}
                                 </td>
                                 <td>{{prof.points}}</td>
                             </tr>    
