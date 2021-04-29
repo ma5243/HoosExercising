@@ -172,6 +172,9 @@
                 $('#save-badge').hide();    
                 var table = $('#etable').DataTable();
                 $('#navbar-inner').width($('#main-card').width());
+                $('#tagsinput').tagsinput({
+                    confirmKeys: [13, 32]
+                });
             });
 
         </script>
@@ -284,7 +287,7 @@
                             </div>
                             <div class="col">
                                 <h6>Body Parts Worked</h6>
-                                <input class="form-control" type="text" data-role="tagsinput" name="tags" value="Core">
+                                <input class="form-control" id="tagsinput" type="text" data-role="tagsinput" name="tags">
                             </div>
                             <div class="col-auto">
                                 <h6><br></h6>
