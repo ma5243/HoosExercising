@@ -36,6 +36,18 @@ def get_exercise(request):
     else:
         return JsonResponse(exercise.values()[0])
 
+@login_required
+def delete_exercise(request):
+    e_id = request.POST.get('id', -1)
+    exercise = Exercise.objects.filter(owner__exact=request.user.id).filter(id__exact=e_id)
+    print(e_id)
+    if(len(exercise) == 0):
+        raise Http404
+    else:
+        exercise[0].delete()
+        return HttpResponse(status=200)
+
+@login_required
 def set_journal(request):
     e_id = request.POST.get('id', -1)
     e_journal_contents = request.POST['journal_contents']
