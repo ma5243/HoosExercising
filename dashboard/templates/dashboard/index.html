@@ -292,13 +292,6 @@
         <div class="card primary mx-auto" id="main-card">
             <div class="card-body">
                 <div class="add-exercise">
-                    <textarea class="form-control" id="journal" onchange="unsavedChanges=true" style="margin-top: 6px; margin-bottom: 8px"></textarea>
-                    <button id="journal-save" onclick="submitJournal()" type="button" class="btn btn-success">Save</button>
-                    <button id="journal-cancel" onclick="cancelJournal()" type="button" class="btn btn-secondary">Close</button>
-                    <span style="padding-top:6px; padding-bottom: 6px; margin-left: 4px" id="save-badge" class="badge badge-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check-fill" viewBox="0 0 16 16">
-                        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm1.354 4.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-                      </svg>
-                      </span>
                     <h3>Add exercise</h3>
                     <form action="submit_exercise" method="post">
                         {% csrf_token %}
@@ -323,6 +316,13 @@
                     </form>
                 </div>
                 <hr />
+                <textarea class="form-control" placeholder="Add notes..." id="journal" onchange="unsavedChanges=true" style="margin-top: 6px; margin-bottom: 8px"></textarea>
+                <button style="margin-bottom: 14px;" id="journal-save" onclick="submitJournal()" type="button" class="btn btn-success">Save</button>
+                <button style="margin-bottom: 14px;" id="journal-cancel" onclick="cancelJournal()" type="button" class="btn btn-secondary">Close</button>
+                <span style="padding-top:6px; padding-bottom: 6px; margin-left: 4px" id="save-badge" class="badge badge-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check-fill" viewBox="0 0 16 16">
+                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm1.354 4.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                  </svg>
+                </span>
                 <table class="table table-striped table-bordered" id="etable" style="width:100%">
                     <thead>
                       <tr>
