@@ -32,7 +32,7 @@ class Profile(models.Model):
     # Returns just a placeholder if not set, otherwise returns the actual photo
     # The heroku filesystem is ephemerakl, so photos get deleted over time.
     def photo_or_placeholder(self):
-        if self.profile_photo and hasattr(self.profile_photo, 'url') and os.path.isfile(settings.MEDIA_ROOT + '/' + self.profile_photo.name):
+        if self.profile_photo and hasattr(self.profile_photo, 'url'):
             return self.profile_photo.url
         return settings.STATIC_URL + 'profile_placeholder.jpg'
 

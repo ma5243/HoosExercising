@@ -8,3 +8,5 @@ python-dotenv
 psycopg2
 Pillow
 spotipy
+boto3
+django-storages
