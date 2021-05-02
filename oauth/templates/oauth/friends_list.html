@@ -10,13 +10,13 @@
 
 {% block content %}
 
-<body style="background-color: aliceblue;">
+<body style="background-color: #232D4B">
   <script>
       $(document).ready(function () {
-          $('#navbar-inner').width($('#root-element').width());
+          $('#navbar-inner').width($('#main-card').width());
       });
   </script>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #f8f9fa;">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="mx-auto" id="navbar-inner" style="padding: 0; margin: 0;">
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,24 +48,35 @@
           </div>
       </div>
   </nav>
-<div class="container" id="root-element" style="background-color: white;">
-    <h1 class="display-1 text-center pt-3">Your Friends</h1>
-    <hr>
-    <ul class="list-group list-group-flush text-center">
-    {% for friend in friends %}
-        <li class="list-group-item">
-            <div class="row align-items-center">
-                <div class="col-3">
-                    <img class="img-fluid" src="{{ friend.photo_or_placeholder }}" style="width: 100px; border-radius: 10%;">
-                </div>
-                <div class="col">
-                    <a class="display-5" href="{% url 'profile' %}{{friend.pk}}">
-                        {{friend.user.first_name}} {{friend.user.last_name}}
-                    </a>
-                </div>
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
+<div class="container" id="root-element" style="max-width: 1140px;">
+    <div class="card primary mx-auto mt-4" style="width: 75%;" id="main-card">
+        <h1 class="display-3 text-center pt-3 pb-3">Your Friends</h1>
+        <ul class="list-group list-group-flush text-center">
+        {% for friend in friends %}
+            <a class="" href="{% url 'profile' %}{{friend.pk}}" style="text-decoration: none;">
+                <li class="list-group-item">
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <img class="img-fluid" src="{{ friend.photo_or_placeholder }}" style="width: 100px; border-radius: 10%;">
+                        </div>
+                        <div class="col">
+                            <h2>
+                                {{friend.user.first_name}} {{friend.user.last_name}}
+                            </h2>
+                        </div>
+                        <div class="col-1 text-primary">
+                            <h2>
+                                {{ friend.points }}
+                            </h2>
+                        </div>
+                    </div>
+                </li>
+            </a>
+        {% endfor %}
+        </ul>
+    </div>
+    <div style="text-align: center; margin-top: 30px">
+        <img style="width: 70px" src="{% static 'logo-notext.png' %}">
+    </div>    
 </div>
 {% endblock %}
