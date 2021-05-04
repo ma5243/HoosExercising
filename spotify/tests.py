@@ -19,19 +19,20 @@ class SpotifyTests(TestCase):
         top_hits = views.retrieve_top_hits(obj)
         self.assertEqual(top_hits['title'], "Today's Top Hits")  
 
-    def test_retrieve_song_correct_title(self):
+    def test_select5_not_null(self):
+        # Test that the function to obtain five songs retrieves a list of songs
         obj = views.obtain_spotify_object(self.client_id, self.client_secret)
-        song_title = "Juicy"
-        song_artist = "Doja Cat"
-        test_song = views.retrieve_song(obj, song_title, song_artist)
-        self.assertEqual(test_song['title'], song_title)  
+        top_hits_link = views.retrieve_top_hits(obj)['link']
+        test_songs = views.select5(obj, top_hits_link)
+        self.assertIsNotNone(test_songs)
 
-    def test_retrieve_song_correct_artist(self):
+    def test_select5_correct_length(self):
+        # Test that the function to obtain five songs retrieves 5 songs exactly
         obj = views.obtain_spotify_object(self.client_id, self.client_secret)
-        song_title = "Juicy"
-        song_artist = "Doja Cat"
-        test_song = views.retrieve_song(obj, song_title, song_artist)
-        self.assertEqual(test_song['artist'], song_artist) 
+        top_hits_link = views.retrieve_top_hits(obj)['link']
+        test_songs = views.select5(obj, top_hits_link)
+        sample_size = [1, 2, 3, 4, 5]
+        self.assertEquals(len(test_songs), 5)
 
 ###############################
 # SOURCE: https://intellipaat.com/community/9924/call-a-function-from-another-file-in-python#:~:text=If%20you%20want%20to%20call,b)and%20you%20are%20done.
