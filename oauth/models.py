@@ -52,6 +52,7 @@ class Profile(models.Model):
 
 # Allauth fires a post_save signal when a new user signs up.
 # We can catch this signal and create a sensible default profile and initialize the one-to-one relationship.
+# Citation: http://www.marinamele.com/taskbuster-django-tutorial/model-creation-onetoone-relationship-signals-django-admin
 @receiver(post_save, sender = settings.AUTH_USER_MODEL)
 def create_profile(sender, created, instance, **kwargs):
     # The signal fires multiple times, so we need to make sure that this one is the actual creator of the user profile.

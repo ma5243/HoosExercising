@@ -185,6 +185,7 @@ LOGOUT_REDIRECT_URL = '/'
 STATIC_URL = '/static/'
 
 # Only configure s3 storage on local machines + Heroku
+# Citation: https://blog.theodo.com/2019/07/aws-s3-upload-django/
 if 'TRAVIS' not in os.environ:
     from dotenv import load_dotenv
     load_dotenv()
