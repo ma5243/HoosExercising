@@ -30,7 +30,7 @@ if 'HEROKU' in os.environ:
 
 
 # Application definition
-
+# https://www.section.io/engineering-education/django-google-oauth/ (Google authentication)
 INSTALLED_APPS = [
     'allauth',
     'allauth.account',
