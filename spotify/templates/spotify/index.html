@@ -132,7 +132,7 @@
     <div class="container">
         <div class="card primary mx-auto" id="main-card">
             <div class="card-body">
-                    <h3>Hoos Listening?</h3><p>Need some music recommendations for your workout? We've got you covered with Spotify's "Today's Top Hits" playlist. Use our "Find New Songs!" feature to spotlight fresh music from the playlist now!</p>
+                    <h3>Hoos Listening?</h3><p>Need some music recommendations for your workout? We've got you covered with Spotify's "Today's Top Hits" playlist. Use our "Refresh" feature to spotlight fresh music from the playlist now!</p>
                     <hr />
                     <div class="container" style="padding: 0px">
                         <div class="row">
@@ -161,10 +161,12 @@
                                     </div>
                                 {% endfor %}
                                 <p></p>
-                                <form target="_self" action="{% url 'songs' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" class="btn btn-primary btn-sm" value="Find New Songs!">
-                                </form>
+                                <div class="container" style="padding-top: 10px; text-align: center; border-top: 1px solid rgba(0, 0, 0, 0.1); border-radius: 5px">
+                                    <form target="_self" action="{% url 'songs' %}" method="post">
+                                        {% csrf_token %}
+                                        <i style="padding-right: 5px">Find new songs!</i> <input type="submit" class="btn btn-primary btn-sm" value="Refresh">
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
