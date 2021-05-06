@@ -26,5 +26,6 @@ class Exercise(models.Model):
 def update_points(sender, instance, created, **kwargs):
     User = get_user_model()
     profile = User.objects.get(id = instance.owner).profile
-    profile.points += 5 # Hardcoded 5, TODO update dynamically based on intensity/time
+    profile.points += (float)(sender.time) / 6 # Hardcoded 5, TODO update dynamically based on intensity/time
+    sender.points_earned = (float)(sender.time) / 6
     profile.save()
