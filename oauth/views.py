@@ -70,6 +70,7 @@ class ProfileView(generic.DetailView):
         profile = get_object_or_404(Profile, pk=self.kwargs.get('pk'))
         return profile
     
+    # Adding extra context data - https://www.valentinog.com/blog/get-context-data/
     def get_context_data(self, *args, **kwargs):
         context = super(ProfileView, self).get_context_data(*args, **kwargs)
         context['exercise_list'] = self.kwargs.get('exercise_list')
