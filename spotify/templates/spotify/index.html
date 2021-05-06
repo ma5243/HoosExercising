@@ -143,10 +143,6 @@
                                 </a>
                             </div>
                             <div class="col-sm" >
-                                <form target="_self" action="{% url 'songs' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Find New Songs!">
-                                </form>
                                 {% for song in music %}
                                     <div class="row">
                                         <a id="song" href="{{song.link}}" style='text-decoration: none'>
@@ -163,6 +159,10 @@
                                         </form>
                                         <button type="button" onclick="addSong(\'' + song.title + '\')" class="btn btn-primary btn-sm">Add to Spotify Liked Songs</button>-->
                                     </div>
+                                    <form target="_self" action="{% url 'songs' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="submit" value="Find New Songs!">
+                                    </form>    
                                 {% endfor %}
                             </div>
                         </div>
