@@ -33,4 +33,5 @@ urlpatterns = [
     path('music/', include('spotify.urls')),
     path('home/', include('homepage.urls')),
     path('logout', LogoutView.as_view()),
+    path('teams/', include('teams.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
