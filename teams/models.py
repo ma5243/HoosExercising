@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 #model for actual team structure. includes team name and list of team members.
 class Team(models.Model):
-    name = models.charField(max_length = 75)
-    team_description = models.textField(max_length = 1000)
+    name = models.CharField(max_length = 75)
+    team_description = models.TextField(max_length = 1000)
     team_members = models.ManyToManyField(User, symmetrical=True, verbose_name="Team Members", null=True)
 
     def __str__(self):
@@ -15,8 +15,8 @@ class Team(models.Model):
 
 #posts to the team page.
 class Posts(models.Model):
-    title = models.charField(max_length = 50)
-    post_body = models.textField(max_length = 1000)
+    title = models.CharField(max_length = 50)
+    post_body = models.TextField(max_length = 1000)
 
     def __str__(self):
         return self.title

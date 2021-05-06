@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'spotify.apps.SpotifyConfig',
     'spotipy',
     'homepage.apps.HomepageConfig',
+    'teams.apps.TeamsConfig',
 ]
 
 MIDDLEWARE = [
