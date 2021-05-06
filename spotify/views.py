@@ -68,63 +68,9 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-####################################
-#  EXTRA CODE, MAY BE USED LATER
-#  client_id = '686f63c1a0564bfda4f0c9165efa21ef'
-#  client_secret = '2477e715839840b4b6e42749d22bbbdc'
-#  redirect_uri = 'http://127.0.0.1:8000/music/playlist/'
-#  scope = "playlist-modify-public"
-#  sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope))
-#  playlists = sp.user_playlists('spotify')
-#  return HttpResponse(playlists)
-#def playlist2(request):
-#    client_id = '686f63c1a0564bfda4f0c9165efa21ef'
-#    client_secret = '2477e715839840b4b6e42749d22bbbdc'
-#    template = loader.get_template('spotify/index.html')
-#    sp = obtain_spotify_object(client_id, client_secret)
-#    top_hits = retrieve_top_hits(sp)
-#    song1 = retrieve_song(sp, "Levitating", "Dua Lipa")
-#    song2 = retrieve_song(sp, "Body", "Megan Thee Stallion")
-#    song3 = retrieve_song(sp, "Juicy", "Doja Cat")
-#    song4 = retrieve_song(sp, "Motivation", "Normani")
-#    song5 = retrieve_song(sp, "Wake Me Up", "Avici")
-#    songs = [song1, song2, song3, song4, song5]
-#
-#    context = {
-#        'top': top_hits,
-#        'music': songs,
-#    }
-#    return HttpResponse(template.render(context, request))
-#
-# def extra_code(request):
-#    client_id = '686f63c1a0564bfda4f0c9165efa21ef'
-#    client_secret = '2477e715839840b4b6e42749d22bbbdc'
-#    redirect_uri = 'http://127.0.0.1:8000/music/'
-#    scope = "playlist-modify-public"
-#    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope))
-#    user_ID = sp.current_user()['id']
-#    song_url = request.POST.get('song')
-#    sp.user_playlist_create(sp.current_user()["id"], "Hoos Exercising Jams", public=True, collaborative=False, description='Music for your workout, provided by Hoos Exercisin')
-#    return HttpResponse(sp.artist('spotify:artist:3jOstUTkEu2JkjvRdBA5Gu'))
-#    return index(request)
-#    sp.current_user_saved_tracks_add(tracks=[song_url])
-#    return index(request)
-#
-#    initial_search = sp_caller.search(q='track:' + str(song_title) + " artist:" + str(artist_name), type='track')
-#    recommended_song = initial_search['tracks']['items'][0]
-#    recommended_song_title = recommended_song['name']
-#    recommended_song_image = recommended_song['album']['images'][0]['url']
-#    recommended_song_link = recommended_song['external_urls']['spotify']
-#    return {
-#        'title': recommended_song_title,
-#        'artist': artist_name,
-#        'image': recommended_song_image,
-#        'link': recommended_song_link
-#    }
-################################
-
 ###########
-# SOURCES: https://www.programiz.com/python-programming/list
+# SOURCES FOR WORKING WITH PYTHON AND THE SPOTIPY API:
+#          https://www.programiz.com/python-programming/list
 #          https://developer.spotify.com/documentation/web-api/
 #          https://developer.spotify.com/documentation/web-api/reference/
 #          https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow
@@ -141,3 +87,13 @@ def index(request):
 #          https://stackoverflow.com/questions/22842289/generate-n-unique-random-numbers-within-a-range
 #          
 ###########
+
+#/***************************************************************************************
+#  SPOTIFY API REFERENCE
+#  Title: Welcome to Spotipy!
+#  Author: Paul Lamere
+#  Date: 2014
+#  Code version: 2.18.0
+#  URL: https://github.com/plamere/spotipy
+#  Software License: MIT License
+#***************************************************************************************/

@@ -77,9 +77,6 @@
             width: auto;
             height: auto;
         }
-        #radioHidden{
-            display: none;
-        }
 
     </style>
         <script>
@@ -151,18 +148,7 @@
                                             <span>&#183;</span>
                                             {{song.artist}}
                                         </a>
-                                        <!--<form target="_self" action="{% url 'songs' %}" method="post">
-                                            {% csrf_token %}
-                                            <input type="radio" name="song" id="radioHidden" value="{{ song.link }}" checked>
-                                            <label for="song">Add to Spotify Liked Songs</label><br>
-                                            <input type="submit" value="Add Now">
-                                        </form>
-                                        <button type="button" onclick="addSong(\'' + song.title + '\')" class="btn btn-primary btn-sm">Add to Spotify Liked Songs</button>-->
-                                    </div>
-                                    <form target="_self" action="{% url 'songs' %}" method="post">
-                                        {% csrf_token %}
-                                        <input type="submit" value="Find New Songs!">
-                                    </form>    
+                                    </div>  
                                 {% endfor %}
                                 <p></p>
                                 <div class="container" style="padding-top: 10px; text-align: center; border-top: 1px solid rgba(0, 0, 0, 0.1); border-radius: 5px">
@@ -185,13 +171,13 @@
 
 </html>
 
-<!--Source: https://www.codegrepper.com/code-examples/html/how+to+make+a+clickable+button+that+open+another+page+in+html-->
-<!--Source: https://www.programiz.com/python-programming/list-->
-<!--Source: https://stackoverflow.com/questions/29360395/display-images-in-django-->
-<!--Source: https://www.w3schools.com/howto/howto_css_image_center.asp-->
-<!--Source: https://html.form.guide/snippets/css-button-rounded-corners/#:~:text=To%20make%20the%20div's%20borders,more%20rounded%20the%20edge%20becomes.-->
-<!--Source: https://stackoverflow.com/questions/37879447/padding-the-space-above-a-css-button-->
-<!--Source: https://www.tutorialspoint.com/How-to-make-text-italic-in-HTML#:~:text=To%20make%20text%20italic%20in%20HTML%2C%20use%20the,which%20renders%20as%20emphasized%20text.-->
-<!--Source: https://bulma.io/documentation/form/radio/#:~:text=You%20can%20check%20a%20radio,to%20the%20element.&text=You%20can%20disable%20a%20radio,%3E%20and%20the%20.-->
-<!--Source: https://stackoverflow.com/questions/29346385/hide-radio-button-while-keeping-its-functionality-->
-<!--Source: https://docs.djangoproject.com/en/3.1/intro/tutorial04/-->
+<!---------------------------------LIST OF SOUCRES------------------------------------------------------------------------>
+<!--Source for how to work with buttons: https://www.codegrepper.com/code-examples/html/how+to+make+a+clickable+button+that+open+another+page+in+html-->
+<!--Source for how to work with/handle lists: https://www.programiz.com/python-programming/list-->
+<!--Source for how to handle image displays with Django: https://stackoverflow.com/questions/29360395/display-images-in-django-->
+<!--Source for how to style an image with Django: https://www.w3schools.com/howto/howto_css_image_center.asp-->
+<!--Source for how to style a button with Django: https://html.form.guide/snippets/css-button-rounded-corners/#:~:text=To%20make%20the%20div's%20borders,more%20rounded%20the%20edge%20becomes.-->
+<!--Source for how to style a button with Django: https://stackoverflow.com/questions/37879447/padding-the-space-above-a-css-button-->
+<!--Source for how to style text in HTML: https://www.tutorialspoint.com/How-to-make-text-italic-in-HTML#:~:text=To%20make%20text%20italic%20in%20HTML%2C%20use%20the,which%20renders%20as%20emphasized%20text.-->
+<!--Source for how to use forms with Django: https://docs.djangoproject.com/en/3.1/intro/tutorial04/-->
+<!----------------------------------------------------------------------------------------------------------------------->
